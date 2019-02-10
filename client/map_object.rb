@@ -1,5 +1,5 @@
 class MapObject
-  attr_reader :x, :y
+  attr_reader :x, :y, :type, :size, :to_id, :from_id, :number_of_turns
   attr_accessor :id, :own, :value
   def initialize(s)
     arr = s.split(",")

@@ -2,7 +2,15 @@ require 'socket'
 require_relative './map_object.rb'
 
 class Client
-  attr_reader :not_my_planets, :my_planets, :ships_speed, :all_planets, :enemy_planets, :neutral_planets, :all_ships, :my_ships, :stream
+  attr_reader :not_my_planets,
+              :my_planets,
+              :ships_speed,
+              :all_planets,
+              :enemy_planets,
+              :neutral_planets,
+              :all_ships,
+              :my_ships,
+              :stream
   attr_accessor :should_stop, :out, :in
 
   def initialize(bot, ip_address, port)
@@ -28,11 +36,12 @@ class Client
 
   def run
     connection = false
-    while !connection
+    until connection
       begin
         puts "Connecting: #{@ip_address}, port: #{@port}"
         @socket = TCPSocket.open(@ip_address, @port)
         @in = @socket.recv(1638400)
+
         @socket.close if @should_stop
         connection = true
         puts 'Connected'
@@ -45,6 +54,7 @@ class Client
   end
 
   def run_stream
+    # p @socket.closed?
     StreamReader.new(@in, self).run
   end
 
